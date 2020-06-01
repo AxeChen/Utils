@@ -23,11 +23,16 @@
 ```
 来自图片浏览
 ```
-val intent = Intent(Intent.ACTION_GET_CONTENT)
-        //任意类型文件
-        intent.type = "image/*"
-        intent.addCategory(Intent.CATEGORY_OPENABLE)
-        startActivityForResult(intent, 1)
+ val intent = Intent()
+            intent.addCategory(Intent.CATEGORY_OPENABLE)
+            intent.type = "image/*"
+            if (Build.VERSION.SDK_INT < 19) {
+                intent.action = Intent.ACTION_GET_CONTENT
+            } else {
+                intent.action = Intent.ACTION_OPEN_DOCUMENT
+            }
+            var requestCode ="1"+(stepInfoBean?.orders!!+1).toString()
+            activity.startActivityForResult(intent, requestCode.toInt())
 ```
 
 
